@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #000;
+}
+
+/* ---------- Liquid gradient glow button (CUSTOM; must be AFTER the @import) ---------- */
+.liquid-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  width: 180px;
+  height: 50px;
+  padding: 0 1.25rem;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.06);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.12);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .25s cubic-bezier(.2,.9,.2,1);
+  z-index: 0;
+}
+
+.liquid-btn__content {
+  position: relative;
+  z-index: 3;
+  color: #F8E5EE;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+.liquid-btn::after {
+  content: "";
+  position: absolute;
+  inset: -30%;
+  z-index: 0;
+  background: conic-gradient(
+    from 0deg,
+    rgba(161,232,175,0.85),
+    rgba(139,92,246,0.85),
+    rgba(244,114,182,0.85),
+    rgba(52,211,153,0.85),
+    rgba(161,232,175,0.85)
+  );
+  filter: blur(40px);
+  transform: translate(-15%, -15%) scale(1.15) rotate(0deg);
+  opacity: 0;
+  transition: opacity .45s cubic-bezier(.2,.9,.2,1), transform .9s cubic-bezier(.2,.9,.2,1);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.liquid-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+
+.liquid-btn:hover {
+  transform: translateY(-4px) scale(1.02);
+}
+.liquid-btn:hover::after {
+  opacity: 1;
+  transform: translate(0%, 0%) scale(1) rotate(320deg);
+  animation: liquid-rotate 6.8s linear infinite;
+}
+.liquid-btn:hover::before {
+  opacity: 1;
+}
+
+.liquid-btn__sweep {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(255,255,255,0.18), rgba(255,255,255,0.02));
+  transform: translateX(-120%) rotate(10deg);
+  opacity: 0;
+  transition: transform .9s cubic-bezier(.2,.9,.2,1), opacity .35s ease;
+}
+.liquid-btn:hover .liquid-btn__sweep {
+  transform: translateX(30%) rotate(10deg);
+  opacity: .45;
+}
+
+.liquid-btn .icon {
+  transition: transform .28s cubic-bezier(.2,.9,.2,1);
+  transform-origin: center;
+}
+.liquid-btn:hover .icon {
+  transform: translate(6px, -4px) rotate(10deg) scale(1.02);
+}
+
+@keyframes liquid-rotate {
+  0%   { transform: translate(-6%, -12%) scale(1.1) rotate(0deg); }
+  25%  { transform: translate(6%, -8%)  scale(1.12) rotate(90deg); }
+  50%  { transform: translate(8%, 6%)   scale(1.08) rotate(180deg); }
+  75%  { transform: translate(-6%, 10%) scale(1.14) rotate(260deg); }
+  100% { transform: translate(-6%, -12%) scale(1.1) rotate(360deg); }
+}
+
+@keyframes background-pan {
+  from {
+    background-position: 0% center;
+  }
+  to {
+    background-position: -200% center;
+  }
+}
+
+
+/* Ensure large text wraps nicely */
+.hero-large {
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+
+.animated-gradient-text {
+  display: inline-block;
+
+  background: linear-gradient(
+    to right,
+    rgba(161, 232, 175, 0.85),
+    rgba(139,92,246,0.85),
+    rgba(244,114,182,0.85),
+    rgba(52, 211, 153, 0.85),
+    rgba(161,232,175,0.85)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  position: relative;   /* required */
+  display: inline-block; 
+  z-index: 2;    
+
+  animation: background-pan 12s linear infinite; /* slower */
+}
+
+/* The glow pseudo-element — duplicates the text, uses the same gradient + animation */
+.animated-gradient-text::after {
+  content: attr(data-text);            /* requires data-text (see markup / JS below) */
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  /* use the same gradient and animation so the progress matches exactly */
+  background: linear-gradient(
+    to right,
+    rgba(161,232,175,0.85),
+    rgba(139,92,246,0.85),
+    rgba(244,114,182,0.85),
+    rgba(52,211,153,0.85),
+    rgba(161,232,175,0.85)
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  /* match the animated movement */
+  animation: background-pan 12s linear infinite;
+
+  /* make it a soft, spreading glow */
+  filter: blur(12px);
+  transform: scale(1.06);
+  opacity: 0;
+  transition: opacity .35s ease, transform .5s cubic-bezier(.2,.9,.2,1);
+  mix-blend-mode: screen; /* improves glow look on dark backgrounds */
+}
+
+/* On hover fade the glow in — the underlying gradient animation keeps moving in sync */
+.animated-gradient-text:hover::after,
+.animated-gradient-text:focus::after {
+  opacity: 0.86;           /* adjust for intensity */
+  transform: scale(1.02);  /* subtle shrink toward the letters */
+}
+
+.recharts-responsive-container:focus,
+.recharts-wrapper:focus,
+.recharts-surface:focus,
+.recharts-bar-rectangle:focus,
+.recharts-bar:focus,
+.recharts-tooltip-wrapper:focus,
+.recharts-cartesian-grid:focus,
+.recharts-xAxis:focus,
+.recharts-yAxis:focus,
+.recharts-layer:focus,
+.recharts-rectangle:focus,
+.recharts-bar-rectangles:focus,
+svg:focus {
+  outline: none !important;
+}
