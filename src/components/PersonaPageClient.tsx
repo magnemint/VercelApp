@@ -126,14 +126,14 @@ const FAQS: { id: number; q: string; a: string | JSX.Element }[] = [
   a: (
     <>
       We aim to be as transparent as possible when we say this, but... yes your data is private 🥳. 
-      We don't collect or even store any of your data in any servers that we have access to, 
-      unless you explicitly allow us (it's the setting called{" "}
+      We don&apos;t collect or even store any of your data in any servers that we have access to, 
+      unless you explicitly allow us (it&apos;s the setting called{" "}
       <Link href="/persona/data-donating" target="_blank" rel="noopener noreferrer">
       <span className="inline-flex items-center gap-1 text-blue-300 hover:underline cursor-pointer">
         data donating<ArrowUpRight width={12} className="inline-block align-middle" />
       </span>{" "}
       </Link>
-      that's turned off by default and can be toggled in settings). 
+      that&apos;s turned off by default and can be toggled in settings). 
       If you do enable the setting, we will use it to further improve the Persona model in a general sense.
     </>
   ),
@@ -143,7 +143,7 @@ const FAQS: { id: number; q: string; a: string | JSX.Element }[] = [
     q: "Can Persona imitate other writers?",
     a: (
       <>
-        Technically, yes. Persona can imitate other writers, but you will need to collect their samples in a healthy quality and quantity. It's unethical to do this without their consent.
+        Technically, yes. Persona can imitate other writers, but you will need to collect their samples in a healthy quality and quantity. It&apos;s unethical to do this without their consent.
       </>
     ),
   },
@@ -180,7 +180,7 @@ export default function PersonaLanding() {
   const chartRef = useRef<HTMLDivElement | null>(null);
 
   // helper to normalize values from recharts (handles number | [number,number])
-  const extractValue = (v: any): number => {
+  const extractValue = (v: number | [number, number] | undefined): number => {
     if (Array.isArray(v) && v.length >= 2) {
       const start = Number(v[0] ?? 0);
       const end = Number(v[1] ?? 0);
@@ -435,14 +435,14 @@ export default function PersonaLanding() {
                     <Tooltip
                       content={({ active, payload, label }) => {
                         if (!active || !payload || payload.length === 0) return null;
-                        const shown = payload.filter((p: any) => visible[p.dataKey as string]);
+                        const shown = payload.filter((p) => visible[p.dataKey as string]);
                         return (
                           <div
                             className="rounded-lg p-3 text-sm"
                             style={{ background: "#0f0a14", color: "#F8E5EE", border: "1px solid rgba(255,255,255,0.04)" }}
                           >
                             <div className="font-semibold mb-1">{label}</div>
-                            {shown.map((p: any) => {
+                            {shown.map((p) => {
                               const v = extractValue(p.value);
                               return (
                                 <div key={p.dataKey} className="flex justify-between">
@@ -481,7 +481,7 @@ export default function PersonaLanding() {
                         stackId={viewMode === "stacked" ? "a" : undefined}
                         isAnimationActive
                         animationDuration={800}
-                        onMouseOver={(data: any) => {
+                        onMouseOver={(data: { name?: string; payload?: Record<string, number>; value?: number | [number, number] }) => {
                           const raw = data?.value ?? (data && data.payload && data.payload.Persona);
                           setHoverInfo({ name: data?.name, key: "Persona", value: extractValue(raw) });
                         }}
@@ -500,7 +500,7 @@ export default function PersonaLanding() {
                         stackId={viewMode === "stacked" ? "a" : undefined}
                         isAnimationActive
                         animationDuration={900}
-                        onMouseOver={(data: any) => {
+                        onMouseOver={(data: { name?: string; payload?: Record<string, number>; value?: number | [number, number] }) => {
                           const raw = data?.value ?? (data && data.payload && data.payload["ChatGPT 5"]);
                           setHoverInfo({ name: data?.name, key: "ChatGPT 5", value: extractValue(raw) });
                         }}
@@ -518,7 +518,7 @@ export default function PersonaLanding() {
                         stackId={viewMode === "stacked" ? "a" : undefined}
                         isAnimationActive
                         animationDuration={1000}
-                        onMouseOver={(data: any) => {
+                        onMouseOver={(data: { name?: string; payload?: Record<string, number>; value?: number | [number, number] }) => {
                           const raw = data?.value ?? (data && data.payload && data.payload["Claude Sonnet 4"]);
                           setHoverInfo({ name: data?.name, key: "Claude Sonnet 4", value: extractValue(raw) });
                         }}
@@ -685,7 +685,7 @@ export default function PersonaLanding() {
       </div>
     </div>
     
-    <p className="text-right text-[#c4b8bb] text-[0.6rem] pt-5 pr-30">¹Depending on your device's hardware capabilities, you may not be able to run Persona's multimodal model. Check <Link href="/persona/hardware-requirements" className="hover:underline text-blue-300">our specifications</Link> to see if your device can run our product.</p>
+    <p className="text-right text-[#c4b8bb] text-[0.6rem] pt-5 pr-30">¹Depending on your device&apos;s hardware capabilities, you may not be able to run Persona&apos;s multimodal model. Check <Link href="/persona/hardware-requirements" className="hover:underline text-blue-300">our specifications</Link> to see if your device can run our product.</p>
   </section>
 
       {/* --- MODERN FAQ SECTION (new) --- */}
@@ -693,7 +693,7 @@ export default function PersonaLanding() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="mb-8 text-center">
             <h2 className="text-3xl md:text-4xl font-extrabold mb-2">Not So Frequently Asked Questions.</h2>
-            <p className="text-[#c4b8bb] max-w-2xl mx-auto">Our product is still fairly new, so here's the answers to what we think you guys are thinking.</p>
+            <p className="text-[#c4b8bb] max-w-2xl mx-auto">Our product is still fairly new, so here&apos;s the answers to what we think you guys are thinking.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -707,8 +707,8 @@ export default function PersonaLanding() {
 
             <div className="rounded-3xl p-6 bg-white/6 backdrop-blur-lg border border-white/6 shadow-lg flex flex-col justify-between">
               <div>
-                <h3 className="text-xl font-semibold mb-2">We didn't answer your question? Let us know!</h3>
-                <p className="text-[#c4b8bb] mb-4">If you're still puzzled, let us personally put the pieces together, we'd love to put your worries to rest.</p>
+                <h3 className="text-xl font-semibold mb-2">We didn&apos;t answer your question? Let us know!</h3>
+                <p className="text-[#c4b8bb] mb-4">If you&apos;re still puzzled, let us personally put the pieces together, we&apos;d love to put your worries to rest.</p>
 
                 <ul className="text-sm space-y-2 text-[#c4b8bb]">
                   <li>→ Roughly a 24 hour to 2 week response time</li>

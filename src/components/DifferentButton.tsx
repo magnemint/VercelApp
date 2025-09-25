@@ -1,31 +1,53 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import { ArrowUpRight } from "lucide-react";
 
-export default function DifferentButton({
-  href = "#",
-  children = "What makes us different",
-  className = "",
-}: {
+interface DownloadButtonProps {
   href?: string;
-  children?: React.ReactNode;
-  className?: string;
-}) {
+}
+
+const DownloadButton: React.FC<DownloadButtonProps> = ({
+  href = "#",
+}) => {
+  const [os, setOs] = useState<"Mac" | "Windows" | "Other">("Other");
+
+  useEffect(() => {
+    if (typeof navigator !== "undefined") {
+      const userAgent =
+        navigator.userAgent || navigator.vendor;
+      if (/Mac/i.test(userAgent)) setOs("Mac");
+      else if (/Win/i.test(userAgent)) setOs("Windows");
+      else setOs("Other");
+    }
+  }, []);
+
+  const buttonText =
+    os === "Mac"
+      ? "Download for Mac"
+      : os === "Windows"
+      ? "Download for Windows"
+      : "App isn't available yet";
+
   return (
-    <div className="relative inline-block group">
-      {/* Gradient border layer */}
-      <span className="absolute inset-0 rounded-full p-[3px] pointer-events-none z-0 overflow-hidden">
-        <span className="block w-full h-full rounded-full opacity-90 animate-gradient-reveal group-hover:animate-gradient-spin bg-[conic-gradient(at_center,_#a1e8af,_#8b5cf6,_#f472b6,_#34d399,_#a1e8af)]" />
+    <a
+      href={href}
+      aria-label={buttonText}
+      className="liquid-btn relative z-10 inline-flex items-center justify-center whitespace-nowrap px-8 py-4 min-w-[260px] text-lg font-semibold rounded-full bg-white/10 backdrop-blur-2xl border border-white/20 border-t-white/40 border-b-white/10 shadow-lg shadow-black/30 hover:scale-105 transition-transform overflow-hidden"
+    >
+      {/* Button content */}
+      <span className="liquid-btn__content flex items-center gap-3 relative z-10">
+        {buttonText}
+        {os !== "Other" && <ArrowUpRight className="icon" size={18} />}
       </span>
 
-      <Link
-        href={href}
-        className="relative z-10 inline-flex items-center px-6 py-3 rounded-full bg-[#0b0b0d]/80 border border-white/10 text-[#F8E5EE] font-semibold shadow-lg hover:scale-[1.02] transition-transform backdrop-blur-md"
-        aria-label="What makes us different"
-      >
-        <span>{children}</span>
-      </Link>
-    </div>
+      {/* Hover sweep animation */}
+      <span
+        className="liquid-btn__sweep absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-40 pointer-events-none transition-transform duration-300"
+        aria-hidden="true"
+      />
+    </a>
   );
-}
+};
+
+export default DownloadButton;

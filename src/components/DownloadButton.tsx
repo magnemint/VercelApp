@@ -17,7 +17,7 @@ const DownloadButton: React.FC<DownloadButtonProps> = ({
   useEffect(() => {
     if (typeof navigator !== "undefined") {
       const userAgent =
-        navigator.userAgent || navigator.vendor || (window as any).opera;
+        navigator.userAgent || navigator.vendor;
       if (/Mac/i.test(userAgent)) setOs("Mac");
       else if (/Win/i.test(userAgent)) setOs("Windows");
       else setOs("Other");

@@ -1,0 +1,18 @@
+{
+  "pages": {
+    "/persona/page": [
+      "static/chunks/fc53bd33b7b13c71.css",
+      "static/chunks/2d466b063ccb8288.js",
+      "static/chunks/6a7993b07cb97bb3.js",
+      "static/chunks/962680203dd1d63c.js",
+      "static/chunks/b38075e65f7d0133.js",
+      "static/chunks/0741b61dddca8adf.js",
+      "static/chunks/f9c7fbc9dd0a731d.js",
+      "static/chunks/9a992631db4082b6.js",
+      "static/chunks/250b8b9eeaf12c7d.js",
+      "static/chunks/c19da6693934fea1.js",
+      "static/chunks/ad485e1ef0aa584e.js",
+      "static/chunks/turbopack-6111909e889ac8b5.js"
+    ]
+  }
+}
