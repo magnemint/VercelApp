@@ -3,6 +3,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import ClientLoaded from "@/components/ClientLoaded"; // optional
 import Navbar from "@/components/Navbar";              // Navbar must be a client component
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ClientLoaded />
 
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
