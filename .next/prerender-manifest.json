@@ -26,7 +26,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/persona/hardware-requirements": {
+    "/persona": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -39,8 +39,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/persona/hardware-requirements",
-      "dataRoute": "/persona/hardware-requirements.rsc",
+      "srcRoute": "/persona",
+      "dataRoute": "/persona.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -74,7 +74,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/persona": {
+    "/persona/hardware-requirements": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -87,8 +87,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/persona",
-      "dataRoute": "/persona.rsc",
+      "srcRoute": "/persona/hardware-requirements",
+      "dataRoute": "/persona/hardware-requirements.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
